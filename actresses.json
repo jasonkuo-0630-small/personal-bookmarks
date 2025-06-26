@@ -1,34 +1,31 @@
 {
   "actresses": [
     {
-      "name": "三上悠亞",
-      "avatar": "images/actresses/mikami_yua.jpg",
-      "cupSize": "E",
-      "debutDate": "2015-08-01"
-    },
-    {
-      "name": "橋本有菜",
-      "avatar": "images/actresses/hashimoto_arina.jpg",
-      "cupSize": "D",
-      "debutDate": "2016-03-15"
-    },
-    {
-      "name": "明日花綺羅",
-      "avatar": "images/actresses/asuka_kirara.jpg",
+      "name": "七瀨愛麗絲",
+      "alias": "市島亞美", 
+      "avatar": "images/actresses/Nanase_Alice.jpg",
       "cupSize": "F",
-      "debutDate": "2010-05-20"
+      "height": "154",
+      "measurements": "B88 / W58 / H86",
+      "debutDate": "2020-09-13"
     },
     {
-      "name": "深田詠美",
-      "avatar": "images/actresses/fukada_eimi.jpg",
+      "name": "蘆名穗花",
+      "alias": "",
+      "avatar": "images/actresses/Honoka_Ashina.jpg",
+      "cupSize": "F",
+      "height": "160",
+      "measurements": "B92 / W59 / H90",
+      "debutDate": "2022-09-22"
+    },
+    {
+      "name": "白石桃",
+      "alias": "",
+      "avatar": "images/actresses/Shiraishi_Momo.jpg",
       "cupSize": "C",
-      "debutDate": "2017-09-08"
-    },
-    {
-      "name": "天使萌",
-      "avatar": "images/actresses/amatsuka_moe.jpg",
-      "cupSize": "D",
-      "debutDate": "2014-12-10"
+      "height": "154",
+      "measurements": "B78 / W58 / H88",
+      "debutDate": "2024-09-05"
     }
   ]
 }
