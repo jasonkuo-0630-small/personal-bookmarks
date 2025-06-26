@@ -67,18 +67,30 @@
         
         <div class="actress-detail">
             <div class="actress-info">
-                <img id="actressAvatar" src="" alt="">
+                <div id="actressAvatar" class="actress-avatar"></div>
                 <div class="actress-data">
                     <h2 id="actressName"></h2>
+                    <p><strong>別名：</strong><span id="actressAlias"></span></p>
                     <p><strong>罩杯：</strong><span id="actressCup"></span></p>
+                    <p><strong>身高：</strong><span id="actressHeight"></span> cm</p>
+                    <p><strong>三圍：</strong><span id="actressMeasurements"></span></p>
                     <p><strong>出道日期：</strong><span id="actressDebut"></span></p>
                 </div>
             </div>
         </div>
         
-        <h3>收藏作品</h3>
-        <div id="movieCards" class="cards-container">
-            <!-- 影片卡片將由 JS 動態生成 -->
+        <!-- 👈 新增：影片排序區域 -->
+        <div class="movies-section">
+            <div class="movies-header">
+                <h3>收藏作品</h3>
+                <select id="movieSortBy" class="movie-sort-select">
+                    <option value="newest">新→舊</option>
+                    <option value="oldest">舊→新</option>
+                </select>
+            </div>
+            <div id="movieCards" class="cards-container">
+                <!-- 影片卡片將由 JS 動態生成 -->
+            </div>
         </div>
     </div>
 
