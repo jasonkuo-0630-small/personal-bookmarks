@@ -200,7 +200,7 @@ select:hover, select:focus {
 
 /* 演員卡片 */
 .actress-card {
-    background: white;
+    background: transparent;
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
@@ -216,24 +216,33 @@ select:hover, select:focus {
 
 .actress-card img {
     width: 100%;
-    height: 300px;
+    height: 200px;
     object-fit: cover;
 }
 
 .actress-card-info {
-    padding: 15px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.8));
+    color: white;
+    padding: 20px 15px 15px 15px;
     text-align: center;
+    border-radius: 0 0 15px 15px;
 }
 
 .actress-card-info h3 {
     margin-bottom: 5px;
-    color: #4a5568;
+    color: white;
     font-size: 18px;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
 }
 
 .actress-card-info p {
-    color: #718096;
+    color: rgba(255,255,255,0.9);
     font-size: 14px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
 }
 
 /* 影片卡片 */
@@ -300,6 +309,7 @@ select:hover, select:focus {
 }
 
 /* 演員詳情 */
+/* 演員詳情 */
 .actress-detail {
     background: white;
     border-radius: 20px;
@@ -314,12 +324,16 @@ select:hover, select:focus {
     align-items: flex-start;
 }
 
-.actress-info img {
-    width: 200px;
-    height: 300px;
-    object-fit: cover;
+/* 演員頭像 - 跟首頁卡片一樣的比例 */
+.actress-avatar {
+    width: 250px;  /* 👈 跟首頁卡片差不多寬度 */
+    height: 200px; /* 👈 跟首頁卡片一樣的高度 */
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
     border-radius: 15px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
 }
 
 .actress-data h2 {
@@ -361,13 +375,17 @@ select:hover, select:focus {
     color: #4a5568;
     margin-bottom: 10px;
     font-size: 1.8em;
+    text-align: left !important; /* 👈 強制靠左對齊 */
 }
 
 .movie-info h3 {
-    color: #718096;
+    color: #4a5568 !important;   /* 👈 強制使用番號同樣顏色 */
     margin-bottom: 20px;
-    font-size: 1.2em;
+    font-size: 1.1em;           /* 👈 稍微縮小字體 */
     font-weight: normal;
+    text-align: left !important; /* 👈 強制靠左對齊 */
+    line-height: 1.4;           /* 👈 增加行高改善可讀性 */
+    word-wrap: break-word;      /* 👈 允許長詞換行 */
 }
 
 .movie-info p {
@@ -446,29 +464,17 @@ select:hover, select:focus {
         text-align: center;
     }
     
-    .actress-info img, .movie-detail img {
+    .actress-avatar {
         width: 100%;
         max-width: 300px;
+        height: 200px; /* 👈 保持跟首頁一樣的高度 */
         margin: 0 auto;
     }
     
-    .controls {
-        padding: 0 10px;
-    }
-    
-    .filters {
-        flex-direction: column;
-        width: 100%;
-    }
-    
-    select {
+    .movie-detail img {
         width: 100%;
         max-width: 300px;
-    }
-    
-    .cards-container {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 15px;
+        margin: 0 auto;
     }
 }
 
