@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>個人書籤管理</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- 密碼輸入頁面 -->
+    <div id="loginPage" class="page active">
+        <div class="login-container">
+            <h1>🔒 個人書籤管理系統</h1>
+            <div class="login-form">
+                <input type="password" id="passwordInput" placeholder="請輸入密碼..." maxlength="4">
+                <button id="loginBtn">進入</button>
+                <div id="errorMsg" class="error-msg">密碼錯誤，請重試</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主頁面 -->
+    <div id="homePage" class="page">
+        <header>
+            <h1>📚 個人書籤管理系統</h1>
+            
+            <!-- 搜尋和篩選區域 -->
+            <div class="controls">
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="搜尋演員名稱...">
+                    <button id="searchBtn">🔍</button>
+                </div>
+                
+                <div class="filters">
+                    <select id="cupFilter">
+                        <option value="">所有罩杯</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                        <option value="F">F</option>
+                        <option value="G">G</option>
+                    </select>
+                    
+                    <select id="sortBy">
+                        <option value="name">依名稱排序</option>
+                        <option value="debutDate">依出道日期</option>
+                        <option value="cupSizeLarge">罩杯大→小</option>
+                        <option value="cupSizeSmall">罩杯小→大</option>
+                    </select>
+                </div>
+            </div>
+        </header>
+        
+        <!-- 演員卡片區域 -->
+        <div id="actressCards" class="cards-container">
+            <!-- 演員卡片將由 JS 動態生成 -->
+        </div>
+    </div>
+
+    <!-- 演員詳情頁面 -->
+    <div id="actressPage" class="page">
+        <div class="page-header">
+            <button id="backToHome" class="back-btn">← 返回首頁</button>
+        </div>
+        
+        <div class="actress-detail">
+            <div class="actress-info">
+                <img id="actressAvatar" src="" alt="">
+                <div class="actress-data">
+                    <h2 id="actressName"></h2>
+                    <p><strong>罩杯：</strong><span id="actressCup"></span></p>
+                    <p><strong>出道日期：</strong><span id="actressDebut"></span></p>
+                </div>
+            </div>
+        </div>
+        
+        <h3>收藏作品</h3>
+        <div id="movieCards" class="cards-container">
+            <!-- 影片卡片將由 JS 動態生成 -->
+        </div>
+    </div>
+
+    <!-- 影片詳情頁面 -->
+    <div id="moviePage" class="page">
+        <div class="page-header">
+            <button id="backToActress" class="back-btn">← 返回演員頁</button>
+            <button id="backToHomeFromMovie" class="back-btn">🏠 返回首頁</button>
+        </div>
+        
+        <div class="movie-detail">
+            <img id="movieImage" src="" alt="">
+            <div class="movie-info">
+                <h2 id="movieCode"></h2>
+                <h3 id="movieTitle"></h3>
+                <p><strong>演員：</strong><span id="movieActresses"></span></p>
+                <p><strong>標籤：</strong><span id="movieTags"></span></p>
+                <div class="movie-description">
+                    <strong>劇情簡介：</strong>
+                    <p id="movieDesc"></p>
+                </div>
+                <div class="movie-links">
+                    <a id="movieUrl" href="" target="_blank" class="watch-btn">🎬 觀看連結</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
