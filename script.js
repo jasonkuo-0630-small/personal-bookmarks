@@ -4,6 +4,7 @@ let movies = [];
 let currentActressName = null;
 let currentMovieId = null;
 let filteredActresses = [];
+let currentActressMovies = []; // 當前演員的影片列表
 let isAuthenticated = false;
 
 // 密碼設定
@@ -71,8 +72,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         // 載入演員資料
         const actressResponse = await fetch('actresses.json');
         const actressData = await actressResponse.json();
-        
-        // 🎯 直接使用標準陣列格式
         actresses = actressData.actresses;
         
         console.log('🔍 載入的演員資料:', actresses);
@@ -109,9 +108,12 @@ function bindEvents() {
     document.getElementById('cupFilter').addEventListener('change', handleFilter);
     document.getElementById('sortBy').addEventListener('change', handleSort);
     
+    // 影片排序事件
+    document.getElementById('movieSortBy').addEventListener('change', handleMovieSort);
+    
     // 返回按鈕
     document.getElementById('backToHome').addEventListener('click', () => showPage('homePage'));
-    document.getElementById('backToActress').addEventListener('click', () => showActressPage(currentActressName)); // 👈 用名稱
+    document.getElementById('backToActress').addEventListener('click', () => showActressPage(currentActressName));
     document.getElementById('backToHomeFromMovie').addEventListener('click', () => showPage('homePage'));
     
     // Enter 鍵搜尋
@@ -120,6 +122,25 @@ function bindEvents() {
             handleSearch();
         }
     });
+}
+
+// 處理影片排序
+function handleMovieSort() {
+    const sortBy = document.getElementById('movieSortBy').value;
+    sortMovies(currentActressMovies, sortBy);
+    renderMovieCards(currentActressName, currentActressMovies);
+}
+
+// 排序影片
+function sortMovies(movies, sortBy) {
+    switch (sortBy) {
+        case 'newest':
+            movies.sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate));
+            break;
+        case 'oldest':
+            movies.sort((a, b) => new Date(a.releaseDate) - new Date(b.releaseDate));
+            break;
+    }
 }
 
 // 初始化首頁
@@ -218,7 +239,7 @@ function renderActressCards() {
 function createActressCard(actress) {
     const card = document.createElement('div');
     card.className = 'actress-card fade-in';
-    card.onclick = () => showActressPage(actress.name); // 👈 直接用名稱
+    card.onclick = () => showActressPage(actress.name);
     
     card.innerHTML = `
         <img src="${actress.avatar}" alt="${actress.name}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjY2NjY2NjIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzY2NiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPuWclueJh+i8ieWFpeWksei0lzwvdGV4dD48L3N2Zz4='">
@@ -234,7 +255,7 @@ function createActressCard(actress) {
 // 顯示演員詳情頁面
 function showActressPage(actressName) {
     currentActressName = actressName;
-    const actress = actresses.find(a => a.name === actressName); // 👈 用名稱查找
+    const actress = actresses.find(a => a.name === actressName);
     
     if (!actress) {
         alert('找不到演員資料');
@@ -242,34 +263,48 @@ function showActressPage(actressName) {
     }
     
     // 填入演員基本資料
-    document.getElementById('actressAvatar').src = actress.avatar;
-    document.getElementById('actressAvatar').alt = actress.name;
+    const avatarElement = document.getElementById('actressAvatar');
+    avatarElement.style.backgroundImage = `url('${actress.avatar}')`;
+    
     document.getElementById('actressName').textContent = actress.name;
+    document.getElementById('actressAlias').textContent = actress.alias || '無';
     document.getElementById('actressCup').textContent = actress.cupSize;
+    document.getElementById('actressHeight').textContent = actress.height || '未知';
+    document.getElementById('actressMeasurements').textContent = actress.measurements || '未知';
     document.getElementById('actressDebut').textContent = formatDate(actress.debutDate);
     
     // 渲染該演員的影片
-    renderMovieCards(actressName); // 👈 傳入名稱
+    renderMovieCards(actressName);
     
     showPage('actressPage');
 }
 
-// 渲染影片卡片
-function renderMovieCards(actressName) {
+// 渲染影片卡片（含排序功能）
+function renderMovieCards(actressName, moviesList = null) {
     const container = document.getElementById('movieCards');
     container.innerHTML = '';
     
-    // 🔍 找出該演員的所有影片 - 直接用名稱比對！
-    const actressMovies = movies.filter(movie => 
-        movie.actresses.includes(actressName)
-    );
+    // 如果沒有傳入影片列表，就重新篩選
+    if (!moviesList) {
+        currentActressMovies = movies.filter(movie => 
+            movie.actresses.includes(actressName)
+        );
+        
+        // 預設按最新排序
+        sortMovies(currentActressMovies, 'newest');
+        
+        // 重設排序選項為預設值
+        document.getElementById('movieSortBy').value = 'newest';
+    } else {
+        currentActressMovies = moviesList;
+    }
     
-    if (actressMovies.length === 0) {
+    if (currentActressMovies.length === 0) {
         container.innerHTML = '<div style="text-align: center; color: white; font-size: 18px; grid-column: 1/-1; margin-top: 50px;">😢 還沒有收藏這位演員的作品</div>';
         return;
     }
     
-    actressMovies.forEach(movie => {
+    currentActressMovies.forEach(movie => {
         const card = createMovieCard(movie);
         container.appendChild(card);
     });
@@ -317,19 +352,18 @@ function showMoviePage(movieId) {
     document.getElementById('movieDesc').textContent = movie.description;
     document.getElementById('movieUrl').href = movie.url;
     
-    // 處理演員列表（可點擊）- 現在超簡單！
+    // 處理演員列表（可點擊）
     const actressesContainer = document.getElementById('movieActresses');
     actressesContainer.innerHTML = '';
     
     movie.actresses.forEach((actressName, index) => {
-        // 🎉 直接使用演員名稱，不用查找！
         const link = document.createElement('a');
         link.href = '#';
         link.className = 'actress-link';
-        link.textContent = actressName; // 👈 直接顯示名稱
+        link.textContent = actressName;
         link.onclick = (e) => {
             e.preventDefault();
-            showActressPage(actressName); // 👈 直接傳入名稱
+            showActressPage(actressName);
         };
         
         actressesContainer.appendChild(link);
@@ -376,18 +410,6 @@ function formatDate(dateString) {
     const day = date.getDate().toString().padStart(2, '0');
     return `${year}/${month}/${day}`;
 }
-
-// 工具函數：取得演員姓名（現在不需要了，但保留以防萬一）
-function getActressName(actressName) {
-    return actressName; // 😄 直接返回名稱就好
-}
-
-// 錯誤處理：圖片載入失敗 (移除這個，因為我們已經在HTML裡處理了)
-// document.addEventListener('error', (e) => {
-//     if (e.target.tagName === 'IMG') {
-//         e.target.src = 'https://via.placeholder.com/300x200/cccccc/ffffff?text=圖片載入失敗';
-//     }
-// }, true);
 
 // 防止右鍵菜單（簡單的保護措施）
 document.addEventListener('contextmenu', (e) => {
