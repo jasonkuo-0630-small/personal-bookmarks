@@ -26,6 +26,25 @@
       "height": "154",
       "measurements": "B78 / W58 / H88",
       "debutDate": "2024-09-05"
+    },
+    {
+      "name": "若宮穗乃",
+      "alias": "",
+      "avatar": "images/actresses/Hono_Wakamiya.jpg",
+      "cupSize": "H",
+      "height": "164",
+      "measurements": "B94 / W60 / H94",
+      "debutDate": "2018-11-22"
+    },
+    {
+      "name": "雨宮響",
+      "alias": "",
+      "avatar": "images/actresses/Mamiya_Hibiki.jpg",
+      "cupSize": "H",
+      "height": "168",
+      "measurements": "B92 / W62 / H92",
+      "debutDate": "2024-01-17"
     }
+
   ]
 }
